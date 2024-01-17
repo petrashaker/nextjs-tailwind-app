@@ -18,7 +18,7 @@ const Select = (props: { options: string[], defaultValue: string }) => {
 
   return(
     <div
-      className="border border-cyan-200 bg-cyan-200 w-28 rounded p-1"
+      className="border border-cyan-200 bg-cyan-200 rounded p-1 w-full"
       onClick={ () => handleClick() }
       tabIndex={1}
       onKeyDown={ handleKeyPress }

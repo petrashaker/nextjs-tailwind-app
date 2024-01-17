@@ -1,19 +1,21 @@
 import { useState } from "react";
-import Select from "../select/select";
-import { ExerciseFormDataType } from "../../types/componentStateTypes";
+import Select from "../Select";
+import { ExerciseFormDataType } from "../../../../../types/componentStateTypes";
+import { useTranslation } from "../../../i18/client";
 
-const ExerciseForm = () => {
+const ExerciseForm = (props: { lng: string }) => {
+  const { t } = useTranslation(props.lng, 'exercise-form')
   const [formData, setFormData] = useState<ExerciseFormDataType>({
     source: "",
     time: 0
   });
-  
+
   const handleSubmit = () => {
 
   }
   
   return(
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={ handleSubmit } className="w-96">
       {/* výběr typu cvičení */}
       <Select 
         defaultValue="Typ cvičení"
@@ -36,7 +38,8 @@ const ExerciseForm = () => {
           htmlFor="exerciseSource"
           className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
         >
-          Zdroj cvičení
+          { t("exerciseType") }
+          {/* Typ cvičení */}
         </label>
       </div>
       <div className="relative">
@@ -51,10 +54,14 @@ const ExerciseForm = () => {
           htmlFor="exerciseTime"
           className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
         >
-          Délka cvičení
+          { t("time") }
+          {/* Délka cvičení */}
         </label>      
       </div>
-      <button type="button" className="cursor-pointer bg-cyan-600 rounded p-1.5 hover:bg-cyan-800">Odeslat</button>
+      <button type="button" className="cursor-pointer bg-cyan-600 rounded p-1.5 hover:bg-cyan-800">
+        { t("submit") }
+        {/* Odeslat */}
+      </button>
     </form>
   );
 };

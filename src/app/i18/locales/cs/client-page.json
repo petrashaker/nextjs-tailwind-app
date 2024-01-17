@@ -1,0 +1,7 @@
+{
+  "title": "Stránka pro klienta",
+  "counter_one": "vybrána jedna",
+  "counter_other": "{{count}} vybráno",
+  "counter_zero": "nic nevybráno",
+  "backToHome": "Zpět domů"
+}
