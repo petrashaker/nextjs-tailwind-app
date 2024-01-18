@@ -1,7 +1,8 @@
 {
-  "trainingType": "Exercise Type",
+  "trainingType": "Training Type",
   "focus":        "Focus",
-  "time":         "Exercise length",
+  "source":       "Training source",
+  "time":         "Training length",
   "submit":       "Submit",
   "focusAt": {
     "butt":       "butt", 

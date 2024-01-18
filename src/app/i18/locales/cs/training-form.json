@@ -1,6 +1,7 @@
 {
   "trainingType": "Typ cvičení",
   "focus":        "Zaměření",
+  "source":       "Zdroj cvičení",
   "time":         "Délka cvičení",
   "submit":       "Odeslat",
   "focusAt": {
