@@ -1,4 +1,4 @@
-import { useTranslation } from '@/app/i18'
+import { useTranslation } from '../../../i18'
 import { FooterBase } from './FooterBase'
 
 export const Footer = async (props: { lng: string }) => {

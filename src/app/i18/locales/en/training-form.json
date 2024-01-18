@@ -1,0 +1,15 @@
+{
+  "trainingType": "Exercise Type",
+  "focus":        "Focus",
+  "time":         "Exercise length",
+  "submit":       "Submit",
+  "focusAt": {
+    "butt":       "butt", 
+    "arms":       "arms",
+    "belly":      "belly",
+    "legs":       "legs",
+    "back":       "back",
+    "wholeBody":  "whole body"
+  }
+
+}

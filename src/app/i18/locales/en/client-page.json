@@ -3,5 +3,5 @@
   "counter_one": "one selected",
   "counter_other": "{{count}} selected",
   "counter_zero": "none selected",
-  "backToHome": "Back to home"
+  "back-to-home": "Back to home"
 }

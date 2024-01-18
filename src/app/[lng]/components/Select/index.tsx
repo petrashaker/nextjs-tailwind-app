@@ -13,7 +13,7 @@ const Select = (props: { options: string[], defaultValue: string }) => {
   };
 
   const handleOptionClick = (item: string) => {
-
+    console.log("item:", item);
   };
 
   return(

@@ -1,0 +1,14 @@
+{
+  "trainingType": "Typ cvičení",
+  "focus":        "Zaměření",
+  "time":         "Délka cvičení",
+  "submit":       "Odeslat",
+  "focusAt": {
+    "butt":       "zadek", 
+    "arms":       "paže",
+    "belly":      "břicho",
+    "legs":       "nohy",
+    "back":       "záda",
+    "wholeBody":  "celé tělo"
+  }
+}

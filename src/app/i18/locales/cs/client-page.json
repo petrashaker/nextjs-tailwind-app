@@ -3,5 +3,5 @@
   "counter_one": "vybrána jedna",
   "counter_other": "{{count}} vybráno",
   "counter_zero": "nic nevybráno",
-  "backToHome": "Zpět domů"
+  "back-to-home": "Zpět domů"
 }

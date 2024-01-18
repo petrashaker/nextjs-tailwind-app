@@ -36,3 +36,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 Translation configuration according to: https://locize.com/blog/next-app-dir-i18n/
+Firebase realtime database according to: https://www.youtube.com/watch?v=qKxisFLQRpQ
+Firebase fetch database according to: https://www.youtube.com/watch?v=WnQx9-2BOSQ

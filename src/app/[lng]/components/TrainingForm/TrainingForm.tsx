@@ -1,30 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../Select";
 import { ExerciseFormDataType } from "../../../../../types/componentStateTypes";
 import { useTranslation } from "../../../i18/client";
+import { get, ref } from "firebase/database";
+import { database } from "../../../firebaseCongif";
 
-const ExerciseForm = (props: { lng: string }) => {
-  const { t } = useTranslation(props.lng, 'exercise-form')
+const TrainingForm = (props: { lng: string }) => {
+  const { t, i18n } = useTranslation(props.lng, 'training-form')
   const [formData, setFormData] = useState<ExerciseFormDataType>({
     source: "",
     time: 0
   });
+  const [options, setOptions] = useState({
+    trainingType: [],
+    focus: []
+  });
 
   const handleSubmit = () => {
-
+    
   }
-  
+  console.log("formData", formData);
+  useEffect(() => {
+    const formDataRef = ref(database, "training")
+    get(formDataRef).then((snapshot) => {
+      if(snapshot.exists()) {
+        const data = snapshot.val();
+        setOptions({
+          trainingType: data.trainingType,
+          focus: data.focusAt
+        });
+      } else {
+        console.log("No data available")
+      }
+    }).catch(error => {
+      console.error(error)
+    })
+  }, [props.lng])
+
   return(
     <form onSubmit={ handleSubmit } className="w-96">
       {/* výběr typu cvičení */}
       <Select 
-        defaultValue="Typ cvičení"
-        options={ ["Pilates", "Venkovní posilovna", "Procházka", "Streching", "Jiné"] } 
+        defaultValue={ t("trainingType") }
+        options={ Object.values(options.trainingType).map(option => option[props.lng]) } 
       />
       {/* zaměření */}
       <Select 
-        defaultValue="Zaměření"
-        options={ ["zadek", "paže", "břicho", "nohy", "záda", "celé tělo"] } 
+        defaultValue={ t("focus") }
+        options={ Object.values(options.focus).map(option => option[props.lng]) } 
       />
       <div className="relative">
        <input
@@ -38,8 +61,7 @@ const ExerciseForm = (props: { lng: string }) => {
           htmlFor="exerciseSource"
           className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
         >
-          { t("exerciseType") }
-          {/* Typ cvičení */}
+          { t("trainingType") }
         </label>
       </div>
       <div className="relative">
@@ -58,7 +80,7 @@ const ExerciseForm = (props: { lng: string }) => {
           {/* Délka cvičení */}
         </label>      
       </div>
-      <button type="button" className="cursor-pointer bg-cyan-600 rounded p-1.5 hover:bg-cyan-800">
+      <button type="button" className="cursor-pointer bg-cyan-600 rounded p-1.5 hover:bg-cyan-800" onClick={handleSubmit}>
         { t("submit") }
         {/* Odeslat */}
       </button>
@@ -66,4 +88,4 @@ const ExerciseForm = (props: { lng: string }) => {
   );
 };
 
-export default ExerciseForm;
+export default TrainingForm;
