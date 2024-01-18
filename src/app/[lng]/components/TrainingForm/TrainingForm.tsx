@@ -6,7 +6,7 @@ import { get, ref } from "firebase/database";
 import { database } from "../../../firebaseCongif";
 
 const TrainingForm = (props: { lng: string }) => {
-  const { t, i18n } = useTranslation(props.lng, 'training-form')
+  const { t } = useTranslation(props.lng, 'training-form')
   const [formData, setFormData] = useState<ExerciseFormDataType>({
     source: "",
     time: 0
@@ -17,9 +17,9 @@ const TrainingForm = (props: { lng: string }) => {
   });
 
   const handleSubmit = () => {
-    
+
   }
-  console.log("formData", formData);
+
   useEffect(() => {
     const formDataRef = ref(database, "training")
     get(formDataRef).then((snapshot) => {

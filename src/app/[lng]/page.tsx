@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useTranslation } from '../i18'
 import { Footer } from './components/Footer'
-import HomeWrapper from './components/HomeWrapper/HomeWrapper'
+import HomeWrapper from './components/HomeWrapper'
 
 const Page = async ({ params: { lng } }: { params: { lng: string }}) => {
   const { t } = await useTranslation(lng)
