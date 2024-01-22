@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import Select from "../Select/Select";
 import { OptionType, SelectOptionsType, TrainingFormDataType } from "../../../../../types/componentStateTypes";
 import { useTranslation } from "../../../i18/client";
 import { get, ref } from "firebase/database";
 import { database } from "../../../firebaseCongif";
+import InputWithError from "../formElement/InputWithError/InputWithError";
+import Select from "../formElement/Select/Select";
 
 const TrainingForm = (props: { lng: string }) => {
   const { t } = useTranslation(props.lng, 'training-form')
@@ -67,7 +68,7 @@ const TrainingForm = (props: { lng: string }) => {
   return(
     <form onSubmit={ handleSubmit } className="w-96">
       {/* výběr typu cvičení */}
-      <Select 
+      <Select
         id={ "traningTypeSelect" }
         defaultValue={ t("trainingType") }
         options={ getOptionsLocale(options.trainingType) }
@@ -112,6 +113,7 @@ const TrainingForm = (props: { lng: string }) => {
           {/* Délka cvičení */}
         </label>      
       </div>
+      <InputWithError />
       <button 
         type="button"
         onClick={handleSubmit}

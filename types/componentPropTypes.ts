@@ -1,4 +1,4 @@
-import { OptionType } from "./componentStateTypes"
+import { InputHTMLAttributes } from "react";
 
 export type SelectType = {
   id: string, 
@@ -6,3 +6,17 @@ export type SelectType = {
   defaultValue: string, 
   onItemChange: any, 
 }
+
+// Definition for inputWithError
+export type InputWithErrorProps = InputHTMLAttributes<HTMLInputElement> & {
+  error?: string;
+  hidden?: boolean;
+  gridItem?: string;
+  feedback?: boolean;
+  feedbackMessageKey?: string;
+  feedbackMessageNamespace?: string;
+  floatingLabel?: boolean;
+  errorMessageVisible?: boolean;
+  onData?: (arg: any) => void;
+  onAresClassNameChange?: string;
+};

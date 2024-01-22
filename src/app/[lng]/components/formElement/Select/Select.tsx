@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SelectType } from "../../../../../types/componentPropTypes";
+import { SelectType } from "../../../../../../types/componentPropTypes";
 
 const Select = (props: SelectType) => {
   const [value, setValue] = useState(props.defaultValue)

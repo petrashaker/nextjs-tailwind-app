@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../globals.css'
 import { dir } from 'i18next'
 import { languages } from '../i18/settings'
+import StoreProvider from '../StoreProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,7 +29,13 @@ const RootLayout = ({
 }) => {
   return (
     <html lang={lng} dir={dir(lng)}>
-      <body className={inter.className}>{children}</body>
+      
+      <body className={inter.className}>
+        <StoreProvider>
+        {children}
+        </StoreProvider>
+        </body>
+      
     </html>
   )
 }
