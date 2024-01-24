@@ -7,22 +7,6 @@ const emptyCountry: Country = {
   countryName: "Česká republika"
 };
 
-type countryParams = {
-  country: {
-    countryCode: string,
-    countryName: string
-  }
-};
-
-const emptyAddress: Address = {
-  name: "",
-  street: "",
-  streetNumber: "",
-  city: "",
-  postalCode: "",
-  country: emptyCountry
-};
-
 // Slice defining state of registration form
 const initialState: RegistrationFormType = {
   firstName: "",
@@ -31,9 +15,11 @@ const initialState: RegistrationFormType = {
   phoneNumber: "",
   personalIdNumber: "",
   vatIdNumber: "",
-  billingAddress: emptyAddress,
-  differentDelivery: false,
-  deliveryAddress: emptyAddress
+  companyName: "",
+  street: "",
+  streetNumber: "",
+  city: "",
+  postalCode: "",
 };
 
 type actionParams = {
@@ -66,75 +52,6 @@ const registrationFormSlice = createSlice({
         }, `Action 'setValue' called with unknown property name '${propertyName}'.`);
       }
     },
-
-    // set single value in delivery address
-    setDeliveryValue: (state, action: PayloadAction<actionParams>) => {
-      const propertyName = action.payload.propertyName;
-      if (state.deliveryAddress.hasOwnProperty(propertyName)) {
-        state.deliveryAddress = {
-          ...state.deliveryAddress,
-          [propertyName]: action.payload.value
-        };
-      } else {
-        console.warn({
-          action: "registrationFormSlice.setDeliveryValue",
-          payload: action.payload
-        }, `Action 'setDeliveryValue' called with unknown property name '${propertyName}'.`);
-      }
-    },
-
-    setDeliveryCountryValue: (state, action: PayloadAction<countryParams>) => {
-      const propertyName = action.payload;
-      if (state.deliveryAddress.hasOwnProperty("country")) {
-        state.deliveryAddress = {
-          ...state.deliveryAddress,
-          country: {
-            countryCode:  action.payload.country.countryCode,
-            countryName: action.payload.country.countryName
-          }
-        };
-      } else {
-        console.warn({
-          action: "registrationFormSlice.setCountryValue",
-          payload: action.payload
-        }, `Action 'setCountryValue' called with unknown property name '${propertyName}'.`);
-      }
-    },
-
-    // set single value in billing address
-    setBillingValue: (state, action: PayloadAction<actionParams>) => {
-      const propertyName = action.payload.propertyName;
-      if (state.billingAddress.hasOwnProperty(propertyName)) {
-        state.billingAddress = {
-          ...state.billingAddress,
-          [propertyName]: action.payload.value
-        };
-      } else {
-        console.warn({
-          action: "registrationFormSlice.setBillingValue",
-          payload: action.payload
-        }, `Action 'setBillingValue' called with unknown property name '${propertyName}'.`);
-      }
-    },
-
-    setBillingCountryValue: (state, action: PayloadAction<countryParams>) => {
-      const propertyName = action.payload;
-      if (state.billingAddress.hasOwnProperty("country")) {
-        state.billingAddress = {
-          ...state.billingAddress,
-          country: {
-            countryCode:  action.payload.country.countryCode,
-            countryName: action.payload.country.countryName
-          }
-        };
-      } else {
-        console.warn({
-          action: "registrationFormSlice.setCountryValue",
-          payload: action.payload
-        }, `Action 'setCountryValue' called with unknown property name '${propertyName}'.`);
-      }
-    },
-
 
     // reset registration form state
     resetState: () => {
@@ -200,11 +117,7 @@ const registrationFormSlice = createSlice({
 
 export const {
   setValue,
-  setDeliveryValue,
-  setBillingValue,
   // setAresData,
-  setBillingCountryValue,
-  setDeliveryCountryValue,
   setInitialCustomerValue,
   resetState
 } = registrationFormSlice.actions;

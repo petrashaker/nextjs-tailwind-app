@@ -9,3 +9,15 @@ export const isNotEmptyString = (value: string | undefined | null) => {
   }
   return false;
 };
+
+/**
+ * Checks whether string is empty.
+ * @param value         string to check
+ * @return              true if string is undefined, null, has zero length or only contains whitespace characters
+ */
+export const isEmptyString = (value: string | undefined | null) => {
+  if (typeof value === "string") {
+    return value.trim().length === 0;
+  }
+  return true;
+};

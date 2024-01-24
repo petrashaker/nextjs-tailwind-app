@@ -18,9 +18,11 @@ export type RegistrationFormType = {
   phoneNumber: string,
   personalIdNumber: string,
   vatIdNumber: string,
-  billingAddress: Address,
-  differentDelivery: boolean,
-  deliveryAddress: Address,
+  companyName: string,
+  street: string,
+  streetNumber: string,
+  city: string,
+  postalCode: string,
 }
 
 // Definition for Ares redux state

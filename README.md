@@ -38,3 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 Translation configuration according to: https://locize.com/blog/next-app-dir-i18n/
 Firebase realtime database according to: https://www.youtube.com/watch?v=qKxisFLQRpQ
 Firebase fetch database according to: https://www.youtube.com/watch?v=WnQx9-2BOSQ
+Redux Next.js documentation: https://redux.js.org/usage/nextjs
+Tailwing Next.js documentation: https://tailwindcss.com/docs/installation
