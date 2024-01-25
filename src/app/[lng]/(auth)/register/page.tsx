@@ -2,20 +2,20 @@
 
 import InputWithError from '../../components/formElement/InputWithError/InputWithError'
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { useAppDispatch, useAppSelector, useAppStore } from '@/lib/hook'
+import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { setValue } from '@/lib/features/registration/registrationFormSlice'
 import ButtonWithLoading from '../../components/formElement/ButtonWithLoading/ButtonWithLoading'
 import { useRouter } from 'next/navigation'
 import { isEmptyString } from '../../../../../utils/stringUtils'
 import { Validation } from '../../../../../utils/constants'
+import { useTranslation } from '@/app/i18/client'
 
 const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
+  const { t } = useTranslation(lng, 'auth')
   const dispatch = useAppDispatch();
-  const store = useAppStore();
   const router = useRouter()
   // use registration form state from redux
   const registrationForm = useAppSelector(state => state.registrationForm)
-  console.log("registrationForm:", registrationForm);
   // initial errors for required values
   const initialErrors = {
     firstName: "",
@@ -51,27 +51,27 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
 
     if(isEmptyString(registrationForm.firstName)) {
       isFilledCorrectly = false;
-      newErrorState.firstName = "Je třeba vyplnit křestní jméno.";
+      newErrorState.firstName = t("errorMessage.missing.personalIdNumber");
     }
     if(isEmptyString(registrationForm.surname)) {
       isFilledCorrectly = false;
-      newErrorState.surname = "Je třeba vyplnit příjmení.";
+      newErrorState.surname = t("errorMessage.missing.personalIdNumber");
     }
     if(isEmptyString(registrationForm.email)) {
       isFilledCorrectly = false;
-      newErrorState.email = "Je třeba vyplnit email."
+      newErrorState.email = t("errorMessage.missing.personalIdNumber");
     }
     if(!Validation.email.test(registrationForm.email.trim())) {
       isFilledCorrectly = false;
-      newErrorState.email = "Zadaný email nesplňuje požadavky pro email."
+      newErrorState.email = t("errorMessage.wrongType.email");
     }
     if(isEmptyString(registrationForm.phoneNumber)) {
       isFilledCorrectly = false;
-      newErrorState.phoneNumber = "Je třeba vyplnit telefonní číslo."
+      newErrorState.phoneNumber = t("errorMessage.missing.personalIdNumber");
     }
     if(!Validation.phone.test(registrationForm.phoneNumber.trim())) {
       isFilledCorrectly = false;
-      newErrorState.phoneNumber = "Zadané telefonní číslo nesplňuje požadavky pro telefonní číslo."
+      newErrorState.phoneNumber = t("errorMessage.wrongType.email");
     }
 
     setErrors(newErrorState);
@@ -80,36 +80,19 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
 
   const submitHandler = ( event: FormEvent ) => {
     event.preventDefault();
-    console.log("submitHandler:", registrationForm);
 
     if (isLoading) {
       return;
     }
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-
-    // getting IDs of used input elements 
-    const formElement = event.target as HTMLFormElement;
-    const formInputArray = [];
-    for(let i = 0; i < formElement.length; i++) {
-      if(formElement[i].tagName === "INPUT") {
-        formInputArray.push(formElement[i].id);
-      }
-    }
-
     setLoading(true);
 
     const newErrorState = errors;
-    // const isFilledCorrectly = registrationInputIsNotEmpty(formElement, newErrorState).isFilledCorrectly;
     setErrors({
       ...newErrorState
     });
 
-    // if(errors.phoneNumber) {
-    //   setCheckValidity(false);
-    // }
-
     if (isFilledCorrectly()) {
-        router.push("/address")
+      router.push("/address")
     } else {
       console.error({
         function: "submitHandler",
@@ -122,53 +105,47 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
 
   return (
     <div className='w-96 p-4 mx-auto text-center'>
-      <h1>Kontaktní osoba</h1>
-      <form 
-        onSubmit={ submitHandler }
-        className=''
-      >
-        {/* jméno */}
+      <h1>{ t("title.register") }</h1>
+      <form onSubmit={ submitHandler }>
         <InputWithError 
-          id='firstName'
-          type='text'
-          placeholder='jméno'
+          id={ 'firstName' }
+          type={ 'text' }
+          placeholder={ t("placeholders.firstName") }
           value={ registrationForm.firstName }
           onChange={ valueChangeHandler }
           error={ errors.firstName }
         />
-        {/* příjmení */}
         <InputWithError 
-          id='surname'
-          type='text'
-          placeholder='příjmení'
+          id={ 'surname' }
+          type={ 'text' }
+          placeholder={ t("placeholders.surname") }
           value={ registrationForm.surname }
           onChange={ valueChangeHandler }
           error={ errors.surname }
         />
-        {/* email */}
         <InputWithError 
-          id='email'
-          type='text'
-          placeholder='email'
+          id={ 'email' }
+          type={ 'text' }
+          placeholder={ t("placeholders.email") }
           value={ registrationForm.email }
           onChange={ valueChangeHandler }
           error={ errors.email }
         />
-        {/* telefon */}
         <InputWithError 
-          id='phoneNumber'
-          type='text'
-          placeholder='telefon'
+          id={ 'phoneNumber' }
+          type={ 'text' }
+          placeholder={ t("placeholders.phoneNumber") }
           value={ registrationForm.phoneNumber }
           onChange={ valueChangeHandler }
           error={ errors.phoneNumber }
         />
         <ButtonWithLoading 
           isLoading={ isLoading }
-          color='orange'
-          onClick={ submitHandler }
+          color={ 'cyan-600' }
+          text={ 'white' }
+          type={ 'submit' }
         >
-          Pokračovat
+          { t("button.continue") }
         </ButtonWithLoading>
       </form>
     </div>

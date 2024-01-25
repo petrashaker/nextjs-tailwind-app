@@ -1,16 +1,17 @@
 'use client'
 
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import InputWithError from "../../components/formElement/InputWithError/InputWithError";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import ButtonWithLoading from "../../components/formElement/ButtonWithLoading/ButtonWithLoading";
 import { setValue } from "@/lib/features/registration/registrationFormSlice";
 import { isEmptyString } from "../../../../../utils/stringUtils";
+import { useTranslation } from "@/app/i18/client";
 
-const Address = () => {
+const Address = ({ params: { lng } } : { params: { lng: string }}) => {
+  const { t } = useTranslation(lng, 'auth')
   const dispatch = useAppDispatch();
-  const store = useAppStore();
   const router = useRouter()
   // use registration form state from redux
   const registrationForm = useAppSelector(state => state.registrationForm)
@@ -45,37 +46,38 @@ const Address = () => {
     dispatch(setValue(action));
   };
   
+  /**
+   * Helper function to check validation of inputs.
+   * Vat ID is not mandatory.
+   * @returns 
+   */
   const isFilledCorrectly = () => {
     let isFilledCorrectly = true;
     const newErrorState = initialErrors;
 
     if(isEmptyString(registrationForm.personalIdNumber)) {
       isFilledCorrectly = false;
-      newErrorState.personalIdNumber = "Je třeba vyplnit IČO.";
-    }
-    if(isEmptyString(registrationForm.vatIdNumber)) {
-      isFilledCorrectly = false;
-      newErrorState.vatIdNumber = "Je třeba vyplnit dič.";
+      newErrorState.personalIdNumber = t("errorMessage.missing.personalIdNumber");
     }
     if(isEmptyString(registrationForm.companyName)) {
       isFilledCorrectly = false;
-      newErrorState.companyName = "Je třeba vyplnit název společnosti."
+      newErrorState.companyName = t("errorMessage.missing.companyName");
     }
     if(isEmptyString(registrationForm.street)) {
       isFilledCorrectly = false;
-      newErrorState.street = "Je třeba vyplnit ulici"
+      newErrorState.street = t("errorMessage.missing.street");
     }
     if(isEmptyString(registrationForm.streetNumber)) {
       isFilledCorrectly = false;
-      newErrorState.streetNumber = "Je třeba vyplnit číslo ulice"
+      newErrorState.streetNumber = t("errorMessage.missing.streetNumber");
     }
     if(isEmptyString(registrationForm.city)) {
       isFilledCorrectly = false;
-      newErrorState.city = "Je třeba vyplnit město"
+      newErrorState.city = t("errorMessage.missing.city");
     }
     if(isEmptyString(registrationForm.postalCode)) {
       isFilledCorrectly = false;
-      newErrorState.postalCode = "Je třeba vyplnit psč"
+      newErrorState.postalCode = t("errorMessage.missing.postalCode");
     }
 
     setErrors(newErrorState);
@@ -84,36 +86,19 @@ const Address = () => {
   
   const submitHandler = ( event: FormEvent ) => {
     event.preventDefault();
-    console.log("submitHandler:", registrationForm);
-
+    
     if (isLoading) {
       return;
     }
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-
-    // getting IDs of used input elements 
-    const formElement = event.target as HTMLFormElement;
-    const formInputArray = [];
-    for(let i = 0; i < formElement.length; i++) {
-      if(formElement[i].tagName === "INPUT") {
-        formInputArray.push(formElement[i].id);
-      }
-    }
-
     setLoading(true);
 
     const newErrorState = errors;
-    // const isFilledCorrectly = registrationInputIsNotEmpty(formElement, newErrorState).isFilledCorrectly;
     setErrors({
       ...newErrorState
     });
 
-    // if(errors.phoneNumber) {
-    //   setCheckValidity(false);
-    // }
-
     if (isFilledCorrectly()) {
-        router.push("/summary")
+      router.push("/summary")
     } else {
       console.error({
         function: "submitHandler",
@@ -126,80 +111,71 @@ const Address = () => {
   
   return (
     <div className='w-96 p-4 mx-auto text-center'>
-      <h1>Společnost</h1>
-      <form 
-        onSubmit={ submitHandler }
-        className=''
-      >
-        {/* ares ičo */}
+      <h1>{ t("title.address") }</h1>
+      <form onSubmit={ submitHandler }>
         <InputWithError 
-          id='personalIdNumber'
-          type='text'
-          placeholder='IČO'
+          id={ 'personalIdNumber' }
+          type={ 'text' }
+          placeholder={ t("placeholders.personalIdNumber") }
           value={ registrationForm.personalIdNumber }
           onChange={ valueChangeHandler }
           error={ errors.personalIdNumber }
         />
-        {/* dič */}
         <InputWithError 
-          id='vatIdNumber'
-          type='text'
-          placeholder='DIČ'
+          id={ 'vatIdNumber' }
+          type={ 'text' }
+          placeholder={ t("placeholders.vatIdNumber") }
           value={ registrationForm.vatIdNumber }
           onChange={ valueChangeHandler }
           error={ errors.vatIdNumber }
         />
-        {/* jméno společnosti */}
         <InputWithError 
-          id='companyName'
-          type='text'
-          placeholder='Název společnosti'
+          id={ 'companyName' }
+          type={ 'text' }
+          placeholder={ t("placeholders.companyName") }
           value={ registrationForm.companyName }
           onChange={ valueChangeHandler }
           error={ errors.companyName }
         />
-        {/* ulice */}
         <InputWithError 
-          id='street'
-          type='text'
-          placeholder='ulice'
+          id={ 'street' }
+          type={ 'text' }
+          placeholder={ t("placeholders.street") }
           value={ registrationForm.street }
           onChange={ valueChangeHandler }
           error={ errors.street }
         />
-        {/* číslo ulice */}
         <InputWithError 
-          id='streetNumber'
-          type='text'
-          placeholder='číslo popisné'
+          id={ 'streetNumber' }
+          type={ 'text' }
+          placeholder={ t("placeholders.streetNumber") }
           value={ registrationForm.streetNumber }
           onChange={ valueChangeHandler }
           error={ errors.streetNumber }
         />
-        {/* město */}
         <InputWithError 
-          id='city'
-          type='text'
-          placeholder='město'
+          id={ 'city' }
+          type={ 'text' }
+          placeholder={ t("placeholders.city") }
           value={ registrationForm.city }
           onChange={ valueChangeHandler }
           error={ errors.city }
         />
-        {/* psč */}
         <InputWithError 
-          id='postalCode'
-          type='text'
-          placeholder='psč'
+          id={ 'postalCode' }
+          type={ 'text' }
+          placeholder={ t("placeholders.postalCode") }
           value={ registrationForm.postalCode }
           onChange={ valueChangeHandler }
           error={ errors.postalCode }
         />
         <ButtonWithLoading
           isLoading={ isLoading }
-          color='orange'
-          onClick={ submitHandler }
+          color={ 'cyan-600' }
+          text={ 'white' }
+          type={ 'submit' }
         >
-          Pokračovat
+          { t("button.continue") }
         </ButtonWithLoading>
       </form>
     </div>

@@ -10,14 +10,6 @@ export type SelectType = {
 // Definition for inputWithError
 export type InputWithErrorProps = InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
-  hidden?: boolean;
-  gridItem?: string;
-  feedback?: boolean;
-  feedbackMessageKey?: string;
-  feedbackMessageNamespace?: string;
-  floatingLabel?: boolean;
-  errorMessageVisible?: boolean;
-  onData?: (arg: any) => void;
   onAresClassNameChange?: string;
 };
 
@@ -25,11 +17,9 @@ export type InputWithErrorProps = InputHTMLAttributes<HTMLInputElement> & {
 export type ButtonWithLoadingProps = {
   children: ReactNode;
   isLoading: boolean;
-  color: "white" | "orange";
-  className?: string;
+  color: "cyan-600" | "white";
+  text: "white" | "black"
   type?: "button" | "submit" | "reset";
   onClick?: MouseEventHandler;
-  "data-st-key"?: string;
-  content?: string;
   isDisabled?: boolean;
 };

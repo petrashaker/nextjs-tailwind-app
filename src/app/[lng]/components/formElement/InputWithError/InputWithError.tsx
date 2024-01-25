@@ -15,15 +15,15 @@ import { isNotEmptyString } from "../../../../../../utils/stringUtils";
  */
 const InputWithError = (props: Partial<InputWithErrorProps>) => {
   const showError = typeof props.error !== "undefined" && props.error.trim().length > 0;
-  const [inputValidity, setInputState] = useState<string>("notInitialized");
+  // const [inputValidity, setInputState] = useState<string>("notInitialized");
 
-  const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputState("focus");
-  };
+  // const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputState("focus");
+  // };
 
-  const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    isNotEmptyString(event.currentTarget.value) ? setInputState("valid") : setInputState("error");
-  };
+  // const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   isNotEmptyString(event.currentTarget.value) ? setInputState("valid") : setInputState("error");
+  // };
 
   // const iconValidity = (inputValidity: string) => {
   //   switch (inputValidity) {
@@ -38,11 +38,11 @@ const InputWithError = (props: Partial<InputWithErrorProps>) => {
   const errorInputClasses = `${inputClasses} border-red-500 `
   const standardInputClasses = `${inputClasses} border-cyan-700`
 
-  useEffect(() => {
-  props.onAresClassNameChange !== undefined && setInputState(props.onAresClassNameChange);
-  // for case when user use their saved data in browser and fills it automatically
-  typeof props.value === "string" && props.value.length > 0  && setInputState("valid");
-  }, [props.onAresClassNameChange, props.value]);
+  // useEffect(() => {
+  // props.onAresClassNameChange !== undefined && setInputState(props.onAresClassNameChange);
+  // // for case when user use their saved data in browser and fills it automatically
+  // typeof props.value === "string" && props.value.length > 0  && setInputState("valid");
+  // }, [props.onAresClassNameChange, props.value]);
 
    return (
     <>
@@ -53,12 +53,10 @@ const InputWithError = (props: Partial<InputWithErrorProps>) => {
         placeholder={ props.placeholder }
         value={ props.value }
         onChange={ props.onChange }
-        onBlur={ handleBlur }
+        // onBlur={ handleBlur }
         autoFocus={ props.autoFocus }
         onKeyDown={ props.onKeyDown }
-        onFocus = { handleFocus }
-        // @ts-ignore
-        data-st-key={ props["data-st-key"] }
+        // onFocus = { handleFocus }
       />
       { showError && <p className="text-red-500 text-sm">{ props.error }</p> }
     </>

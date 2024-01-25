@@ -13,12 +13,13 @@ import { ButtonWithLoadingProps } from "../../../../../../types/componentPropTyp
  *   should be handled by parent if required.
  * Required params:
  *   - isLoading - loading state provided by parent
- *   - color     - color scheme (defined in CSS (white / orange))
+ *   - color     - background color scheme (defined in CSS (cyan-600 / white))
+ *   - text      - text color scheme (defined in CSS (white / black)
  *   - children  - children elements to be displayed inside the button
  * Optional params:
- *   - className - HTML class attribute
  *   - type      - "button" (default), "submit" or "reset"
  *   - onClick   - mouse click handler
+ *   - isDisabled - boolean
  * @param props             button parameters
  */
 const ButtonWithLoading = (props: ButtonWithLoadingProps) => {
@@ -42,44 +43,20 @@ const ButtonWithLoading = (props: ButtonWithLoadingProps) => {
     }
   };
 
-  // const switchIcon = (content: string | undefined) => {
-  //   if(content === "login") {
-  //     return (
-  //       <span className="plus-icon">
-  //       <Image src={LoginIcon} alt="login-icon" />
-  //     </span>
-  //     );
-  //   } else if(content === "upload") {
-  //     return (
-  //       <span className="plus-icon">
-  //         <Image src={UploadIcon} alt="upload-icon" />
-  //       </span>
-  //     );
-  //   } else {
-  //     return (
-  //       <span className="plus-icon">
-  //         <Image src={NextIcon} alt="next-icon" />
-  //       </span>
-  //     );
-  //   }
-  // };
-
   return (
     <button
       type={ type }
-      className={ `${props.color}-button ${props.className}` }
+      className={ `bg-${props.color} border-${props.color} border-2 py-1.5 px-5 rounded-md hover:bg-cyan-300` }
       onClick={ clickHandler }
-      data-st-key={ props["data-st-key"] }
       disabled={ props.isDisabled }
     >
       {
-        props.isLoading &&
-          <div className={ "button-overlay" }>
+        props.isLoading ?
             <LoadingLogo />
-          </div>
+            :
+            <span className={ `text-${props.text}` }>{ props.children }</span>
       }
-      {/* { switchIcon(props.content) } */}
-      <span className="plus-title">{ props.children }</span>
+      
     </button>
   );
 };

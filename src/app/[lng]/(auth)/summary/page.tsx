@@ -1,73 +1,112 @@
 'use client'
 
-import { useAppSelector } from "@/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import ButtonWithLoading from "../../components/formElement/ButtonWithLoading/ButtonWithLoading";
 import { useState } from "react";
+import { push, ref, set } from "firebase/database";
+import { database } from "@/app/firebaseCongif";
+import { resetState } from "@/lib/features/registration/registrationFormSlice";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "@/app/i18/client";
 
-const Summary = () => {
+const Summary = ({ params: { lng } } : { params: { lng: string }}) => {
+  const { t } = useTranslation(lng, 'auth')
   // state for loading
   const [ isLoading, setLoading ] = useState(false);
   const registrationForm = useAppSelector(state => state.registrationForm)
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const submitHandler = () => {
+    if (isLoading) {
+      return;
+    }
+    setLoading(true);
 
+    try {
+      const registrationRef = ref(database, "registration")
+      const newDataRef = push(registrationRef)
+
+      set(newDataRef, {
+        firstName: registrationForm.firstName,
+        surname: registrationForm.surname,
+        email: registrationForm.email,
+        phoneNumber: registrationForm.phoneNumber,
+        personalIdNumber: registrationForm.personalIdNumber,
+        vatIdNumber: registrationForm.vatIdNumber,
+        companyName: registrationForm.companyName,
+        street: registrationForm.street,
+        streetNumber: registrationForm.streetNumber,
+        city: registrationForm.city,
+        postalCode: registrationForm.postalCode, 
+      })
+      dispatch(resetState())
+      console.log("Data successfully loaded to Firebase.")
+      router.push("/confirmation")
+    } catch(error) {
+      console.error("Data not added", error)
+      setLoading(false)
+    }
   }
-  
+
   return(
-    <div className='w-96 p-4 mx-auto text-center'>
-      <h3>Shrnutí</h3>
-      <div>
-        <span>Jméno:</span>
-        <span>{ registrationForm.firstName }</span>
-      </div>
-      <div>
-        <span>Příjmení:</span>
-        <span>{ registrationForm.surname }</span>
-      </div>
-      <div>
-        <span>Email:</span>
-        <span>{ registrationForm.email }</span>
-      </div>
-      <div>
-        <span>Telefon:</span>
-        <span>{ registrationForm.phoneNumber }</span>
-      </div>
-      <div>
-        <span>Název společnosti:</span>
-        <span>{ registrationForm.companyName }</span>
-      </div>
-      <div>
-        <span>IČO:</span>
-        <span>{ registrationForm.personalIdNumber }</span>
-      </div>
-      <div>
-        <span>DIČ:</span>
-        <span>{ registrationForm.vatIdNumber }</span>
-      </div>
-      <div>
-        <span>Ulice:</span>
-        <span>{ registrationForm.street }</span>
-      </div>
-      <div>
-        <span>Číslo popisné:</span>
-        <span>{ registrationForm.streetNumber }</span>
-      </div>
-      <div>
-        <span>Město:</span>
-        <span>{ registrationForm.city }</span>
-      </div>
-      <div>
-        <span>PSČ:</span>
-        <span>{ registrationForm.postalCode }</span>
-      </div>
+    <table className='w-96 p-4 mx-auto text-center'>
+      <h1>{ t("title.summary") }</h1>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.firstName") }:</td>
+        <td className="text-left">{ registrationForm.firstName }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.surname") }:</td>
+        <td className="text-left">{ registrationForm.surname }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.email") }:</td>
+        <td className="text-left">{ registrationForm.email }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.phoneNumber") }:</td>
+        <td className="text-left">{ registrationForm.phoneNumber }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.companyName") }:</td>
+        <td className="text-left">{ registrationForm.companyName }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.personalIdNumber") }:</td>
+        <td className="text-left">{ registrationForm.personalIdNumber }</td>
+      </tr>
+      {registrationForm.vatIdNumber && 
+        <tr className="text-left">
+          <td className="text-left">{ t("placeholders.vatIdNumber") }:</td>
+          <td className="text-left">{ registrationForm.vatIdNumber }</td>
+        </tr>
+      }
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.street") }:</td>
+        <td className="text-left">{ registrationForm.street }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.streetNumber") }:</td>
+        <td className="text-left">{ registrationForm.streetNumber }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.city") }:</td>
+        <td className="text-left">{ registrationForm.city }</td>
+      </tr>
+      <tr className="text-left">
+        <td className="text-left">{ t("placeholders.postalCode") }:</td>
+        <td className="text-left">{ registrationForm.postalCode }</td>
+      </tr>
       <ButtonWithLoading
-          isLoading={ isLoading }
-          color='orange'
-          onClick={ submitHandler }
-        >
-        Dokončit
+        isLoading={ isLoading }
+        color={ 'cyan-600' }
+        text={ 'white' }
+        onClick={ submitHandler }
+      >
+        { t("button.submit") }
       </ButtonWithLoading>
-    </div>
+    </table>
   )
 }
 
