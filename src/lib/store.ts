@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import RegistrationFormReducer from "../lib/features/registration/registrationFormSlice"
+import AresDataReducer from "../lib/features/ares/aresSlice"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      registrationForm: RegistrationFormReducer
+      registrationForm: RegistrationFormReducer,
+      aresData: AresDataReducer
     }
   })
 }
