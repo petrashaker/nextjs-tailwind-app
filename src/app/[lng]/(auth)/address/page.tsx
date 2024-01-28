@@ -3,11 +3,13 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import InputWithError from "../../components/formElement/InputWithError/InputWithError";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ButtonWithLoading from "../../components/formElement/ButtonWithLoading/ButtonWithLoading";
-import { setValue } from "@/lib/features/registration/registrationFormSlice";
+import { setAresData, setValue } from "@/lib/features/registration/registrationFormSlice";
 import { isEmptyString } from "../../../../../utils/stringUtils";
 import { useTranslation } from "@/app/i18/client";
+import AresButton from "../../components/AresButton/AresButton";
+import { StateType } from "../../../../../utils/constants";
 
 const Address = ({ params: { lng } } : { params: { lng: string }}) => {
   const { t } = useTranslation(lng, 'auth')
@@ -108,10 +110,28 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
       setLoading(false);
     }
   }
-  
+
+  // accept Ares data from InputWithError component id "personalIdNumber" or id "billing-name"
+  const aresData = useAppSelector((state) => state.aresData);
+  useEffect(() => {
+    if(aresData.state === StateType.SUCCESS) {
+      dispatch(setAresData(aresData));
+    }
+  }, [aresData, dispatch]);
+
   return (
     <div className='w-96 p-4 mx-auto text-center'>
       <h1>{ t("title.address") }</h1>
+        <AresButton 
+         query={ registrationForm.personalIdNumber } 
+         id={ 'personalIdNumber' } 
+         isDisabled={ false }
+        />
+        <AresButton 
+         query={ registrationForm.companyName } 
+         id={ 'companyName' } 
+         isDisabled={ false }
+        />
       <form onSubmit={ submitHandler }>
         <InputWithError 
           id={ 'personalIdNumber' }

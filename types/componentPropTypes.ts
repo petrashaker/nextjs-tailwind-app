@@ -23,3 +23,10 @@ export type ButtonWithLoadingProps = {
   onClick?: MouseEventHandler;
   isDisabled?: boolean;
 };
+
+export type AresUploadBtnProps = {
+  query: string;
+  id: string;
+  isDisabled: boolean;
+  errorMessage?: boolean;
+};

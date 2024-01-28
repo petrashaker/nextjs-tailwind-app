@@ -1,4 +1,5 @@
 // import { AresData, NotificationInterface } from "./dataObjectTypes";
+import { AresData } from "./dataObjectTypes";
 import { GenericAddress } from "./types";
 
 // Country type definition
@@ -26,8 +27,8 @@ export type RegistrationFormType = {
 }
 
 // Definition for Ares redux state
-// export type AresDataState = {
-//   data: AresData,
-//   state: string
-// };
+export type AresDataState = {
+  data: AresData,
+  state: string
+};
 

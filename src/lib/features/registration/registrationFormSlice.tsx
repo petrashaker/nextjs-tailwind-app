@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AresDataState, Country, RegistrationFormType } from "../../../../types/reduxStateTypes";
 import { StateType } from "../../../../utils/constants";
-// import { StateType } from "../../utils/constants";
-
-const emptyCountry: Country = {
-  countryCode: "CZ",
-  countryName: "Česká republika"
-};
 
 // Slice defining state of registration form
 const initialState: RegistrationFormType = {
@@ -26,12 +20,6 @@ const initialState: RegistrationFormType = {
 type actionParams = {
   propertyName: string,
   value: string | boolean
-}
-
-type actionInvitationParams = {
-  firstName: string,
-  surname: string,
-  email: string
 }
 
 const registrationFormSlice = createSlice({
@@ -62,35 +50,35 @@ const registrationFormSlice = createSlice({
     setAresData: (state, action: PayloadAction<AresDataState>) => {
       const incomingData = action.payload;
       if (incomingData.state === StateType.SUCCESS) {
-        state = {
+        return state = {
           ...state,
           companyName: incomingData.data.companyName,
           city: incomingData.data.city,
           postalCode: incomingData.data.postalCode,
           street: incomingData.data.street,
-          streetNumber: incomingData.data.streetNumber
-        },
-        state.personalIdNumber = incomingData.data.personalIdNumber;
-        state.vatIdNumber = incomingData.data.vatIdNumber;
+          streetNumber: incomingData.data.streetNumber,
+          personalIdNumber: incomingData.data.personalIdNumber,
+          vatIdNumber: incomingData.data.vatIdNumber
+        }
       } else if (incomingData.state === StateType.ERROR) {
-        state = {
+        return state = {
           ...state,
           city: incomingData.data.city,
           postalCode: incomingData.data.postalCode,
           street: incomingData.data.street,
-          streetNumber: incomingData.data.streetNumber
+          streetNumber: incomingData.data.streetNumber,
+          vatIdNumber: incomingData.data.vatIdNumber
         };
-        state.vatIdNumber = incomingData.data.vatIdNumber;
       } else if(incomingData.state === StateType.WARN) {
-        state = {
+        return state = {
           ...state,
           city: "",
           postalCode: "",
           street: "",
-          streetNumber: ""
+          streetNumber: "",
+          personalIdNumber: "",
+          vatIdNumber: "" 
         };
-        state.personalIdNumber = "";
-        state.vatIdNumber = "";
       } else {
         console.warn({
           action: "registrationFormSlice.setAresData",
