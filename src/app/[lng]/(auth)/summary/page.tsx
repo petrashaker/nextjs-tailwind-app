@@ -50,63 +50,69 @@ const Summary = ({ params: { lng } } : { params: { lng: string }}) => {
   }
 
   return(
-    <table className='w-96 p-4 mx-auto text-center'>
-      <h1>{ t("title.summary") }</h1>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.firstName") }:</td>
-        <td className="text-left">{ registrationForm.firstName }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.surname") }:</td>
-        <td className="text-left">{ registrationForm.surname }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.email") }:</td>
-        <td className="text-left">{ registrationForm.email }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.phoneNumber") }:</td>
-        <td className="text-left">{ registrationForm.phoneNumber }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.companyName") }:</td>
-        <td className="text-left">{ registrationForm.companyName }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.personalIdNumber") }:</td>
-        <td className="text-left">{ registrationForm.personalIdNumber }</td>
-      </tr>
-      {registrationForm.vatIdNumber && 
-        <tr className="text-left">
-          <td className="text-left">{ t("placeholders.vatIdNumber") }:</td>
-          <td className="text-left">{ registrationForm.vatIdNumber }</td>
-        </tr>
-      }
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.street") }:</td>
-        <td className="text-left">{ registrationForm.street }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.streetNumber") }:</td>
-        <td className="text-left">{ registrationForm.streetNumber }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.city") }:</td>
-        <td className="text-left">{ registrationForm.city }</td>
-      </tr>
-      <tr className="text-left">
-        <td className="text-left">{ t("placeholders.postalCode") }:</td>
-        <td className="text-left">{ registrationForm.postalCode }</td>
-      </tr>
-      <ButtonWithLoading
-        isLoading={ isLoading }
-        color={ 'cyan-600' }
-        text={ 'white' }
-        onClick={ submitHandler }
-      >
-        { t("button.submit") }
-      </ButtonWithLoading>
-    </table>
+    <>
+      <table className='w-96 p-4 mx-auto text-center'>
+        <thead>
+          <h1>{ t("title.summary") }</h1>
+        </thead>
+        <tbody>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.firstName") }:</td>
+            <td className="text-left">{ registrationForm.firstName }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.surname") }:</td>
+            <td className="text-left">{ registrationForm.surname }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.email") }:</td>
+            <td className="text-left">{ registrationForm.email }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.phoneNumber") }:</td>
+            <td className="text-left">{ registrationForm.phoneNumber }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.companyName") }:</td>
+            <td className="text-left">{ registrationForm.companyName }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.personalIdNumber") }:</td>
+            <td className="text-left">{ registrationForm.personalIdNumber }</td>
+          </tr>
+          {registrationForm.vatIdNumber && 
+            <tr className="text-left">
+              <td className="text-left">{ t("placeholders.vatIdNumber") }:</td>
+              <td className="text-left">{ registrationForm.vatIdNumber }</td>
+            </tr>
+          }
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.street") }:</td>
+            <td className="text-left">{ registrationForm.street }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.streetNumber") }:</td>
+            <td className="text-left">{ registrationForm.streetNumber }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.city") }:</td>
+            <td className="text-left">{ registrationForm.city }</td>
+          </tr>
+          <tr className="text-left">
+            <td className="text-left">{ t("placeholders.postalCode") }:</td>
+            <td className="text-left">{ registrationForm.postalCode }</td>
+          </tr>
+          <ButtonWithLoading
+            isLoading={ isLoading }
+            color={ 'cyan-600' }
+            text={ 'white' }
+            onClick={ submitHandler }
+          >
+            { t("button.submit") }
+          </ButtonWithLoading>
+        </tbody>
+      </table>
+      </>
   )
 }
 

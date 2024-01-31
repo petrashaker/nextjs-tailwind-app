@@ -21,5 +21,8 @@ export const POSTAL_CODE_LENGTH = 20;
 
 export const Validation = {
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-  phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+  phone: /^(?:\+420|00420)?[1-9]\d{8}$/, // czech format of number (prefix +420, 00420 or none is allowed)
+  postalCode: /^[A-Za-z0-9-\s]*$/, // matches numbers, letters, dashes and spaces
+  personalIdNumber: /^[0-9]*$/, //matches numbers only
+  vatIdNumber: /^[A-Za-z0-9-]*$/ //matches numbers, letters and dashes
 };

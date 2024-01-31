@@ -1,0 +1,34 @@
+{
+  "validation": {
+    "invalidEmail":     "Neplatná emailová adresa",   
+    "invalidPhone":     "Neplatné telefonní číslo",   
+    "firstName":        "Vyplňte prosím jméno",
+    "surname":          "Vyplňte prosím příjmení",
+    "personalIdNumber": "Vyplňte prosím IČO",
+    "vatIdNumber":      "Vyplňte prosím DIČ",
+    "phoneNumber":      "Vyplňte prosím telefonní číslo",
+    "companyName":      "Vyplňte prosím název společnosti",
+    "street":           "Vyplňte prosím název ulice",
+    "streetNumber":     "Vyplňte prosím číslo popisné",
+    "city":             "Vyplňte prosím město",
+    "postalCode":       "Vyplňte prosím PSČ",
+    "lengthCheck": {
+      "firstName":        "Jméno přesahuje povolený počet znaků (max 50).",
+      "surname":          "Příjmení přesahuje povolený počet znaků (max 50).",
+      "email":            "Email přesahuje povolený počet znaků (max 320).",
+      "companyName":             "Název společnosti přesahuje povolený počet znaků (max 100).",  
+      "personalIdNumber": "IČO přesahuje povolený počet znaků (max 8).",
+      "vatIdNumber":      "DIČ přesahuje povolený počet znaků (max 15).",
+      "street":           "Ulice přesahuje povolený počet znaků (max 100).",
+      "streetNumber":     "Číslo popisné přesahuje povolený počet znaků (max 20).",
+      "city":             "Město přesahuje povolený počet znaků (max 50).",
+      "postalCode":       "PSČ přesahuje povolený počet znaků (max 20)."
+    },
+    "formatCheck": {
+      "phoneNumber":        "Neznámý formát telefonu.",
+      "personalIdNumber":   "IČO nemá platný formát",
+      "vatIdNumber":        "DIČ nemá platný formát",
+      "postalCode":         "PSČ nemá platný formát"
+    }  
+  }
+}

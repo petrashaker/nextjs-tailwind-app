@@ -1,0 +1,34 @@
+{ 
+  "validation": {
+    "invalidEmail":     "Invalid email address",
+    "invalidPhone":     "Invalid phone number",
+    "firstName":        "Please fill in first name",
+    "surname":          "Please fill in surname",
+    "personalIdNumber": "Please fill in personal ID number",
+    "vatIdNumber":      "Please fill in VAT registration",
+    "phoneNumber":      "Please fill in phone number",
+    "companyName":      "Please fill in the company name",
+    "street":           "Please fill in street name",
+    "streetNumber":     "Please fill in house number",
+    "city":             "Please fill in city",
+    "postalCode":       "Please fill in postal code",
+    "lengthCheck": {
+      "firstName":        "The first name exceeds the allowed number of characters (max 50).",
+      "surname":          "The surname exceeds the allowed number of characters (max 50).",
+      "email":            "The email exceeds the allowed number of characters (max 320).",
+      "companyName":      "The company name exceeds the allowed number of characters (max 100).",
+      "personalIdNumber": "The company registration number exceeds the allowed number of characters (max 8).",
+      "vatIdNumber":      "The vat ID number exceeds the allowed number of characters (max 15).",
+      "street":           "The street name exceeds the allowed number of characters (max 100).",
+      "streetNumber":     "The house number exceeds the allowed number of characters (max 20).",
+      "city":             "The city name exceeds the allowed number of characters (max 50).",
+      "postalCode":       "The postal code exceeds the allowed number of characters (max 20)."
+    },
+    "formatCheck": {
+      "phoneNumber":        "The phone number format is not recognized.",
+      "personalIdNumber":   "The company registration number does not have a valid format.",
+      "vatIdNumber":        "The vat ID number does not have a valid format.",
+      "postalCode":         "The postal code number does not have a valid format."
+    }  
+  }
+}

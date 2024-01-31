@@ -60,8 +60,7 @@ const InputWithError = (props: Partial<InputWithErrorProps>) => {
     setFloatingLabel(true)
   }
   }, [props.onAresClassNameChange, props.value]);
-  
-   console.log("value:", typeof props.value, props.placeholder)
+    
    return (
     <>
       <input

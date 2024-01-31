@@ -6,14 +6,15 @@ import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { setValue } from '@/lib/features/registration/registrationFormSlice'
 import ButtonWithLoading from '../../components/formElement/ButtonWithLoading/ButtonWithLoading'
 import { useRouter } from 'next/navigation'
-import { isEmptyString } from '../../../../../utils/stringUtils'
-import { Validation } from '../../../../../utils/constants'
 import { useTranslation } from '@/app/i18/client'
+import useValidation from '../../customHooks/useValidation'
 
 const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
   const { t } = useTranslation(lng, 'auth')
   const dispatch = useAppDispatch();
   const router = useRouter()
+  // validation of submited data from custom hook
+  const { registrationInputIsNotEmpty } = useValidation(lng);
   // use registration form state from redux
   const registrationForm = useAppSelector(state => state.registrationForm)
   // initial errors for required values
@@ -36,46 +37,13 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
       propertyName: event.target.id,
       value: event.target.value
     };
+    // dispatch action
+    dispatch(setValue(action));
     // reset error for changed value
     setErrors({
       ...errors,
       [action.propertyName]: ""
     });
-    // dispatch action
-    dispatch(setValue(action));
-  };
-
-  const isFilledCorrectly = () => {
-    let isFilledCorrectly = true;
-    const newErrorState = initialErrors;
-
-    if(isEmptyString(registrationForm.firstName)) {
-      isFilledCorrectly = false;
-      newErrorState.firstName = t("errorMessage.missing.personalIdNumber");
-    }
-    if(isEmptyString(registrationForm.surname)) {
-      isFilledCorrectly = false;
-      newErrorState.surname = t("errorMessage.missing.personalIdNumber");
-    }
-    if(isEmptyString(registrationForm.email)) {
-      isFilledCorrectly = false;
-      newErrorState.email = t("errorMessage.missing.personalIdNumber");
-    }
-    if(!Validation.email.test(registrationForm.email.trim())) {
-      isFilledCorrectly = false;
-      newErrorState.email = t("errorMessage.wrongType.email");
-    }
-    if(isEmptyString(registrationForm.phoneNumber)) {
-      isFilledCorrectly = false;
-      newErrorState.phoneNumber = t("errorMessage.missing.personalIdNumber");
-    }
-    if(!Validation.phone.test(registrationForm.phoneNumber.trim())) {
-      isFilledCorrectly = false;
-      newErrorState.phoneNumber = t("errorMessage.wrongType.email");
-    }
-
-    setErrors(newErrorState);
-    return isFilledCorrectly;
   };
 
   const submitHandler = ( event: FormEvent ) => {
@@ -84,14 +52,25 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
     if (isLoading) {
       return;
     }
+
+    // getting IDs of used input elements 
+    const formElement = document.querySelector('form')
+    const inputElements = formElement?.querySelectorAll('input');
+    inputElements !== undefined && inputElements.forEach(input => {
+      const inputId = input.id;
+      const inputValue = input.value;
+    });
+
     setLoading(true);
 
     const newErrorState = errors;
+    const isFilledCorrectly = registrationInputIsNotEmpty(inputElements, newErrorState).isFilledCorrectly;
+    
     setErrors({
       ...newErrorState
     });
 
-    if (isFilledCorrectly()) {
+    if (isFilledCorrectly) {
       router.push("/address")
     } else {
       console.error({

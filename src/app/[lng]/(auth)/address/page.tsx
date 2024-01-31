@@ -6,15 +6,17 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ButtonWithLoading from "../../components/formElement/ButtonWithLoading/ButtonWithLoading";
 import { setAresData, setValue } from "@/lib/features/registration/registrationFormSlice";
-import { isEmptyString } from "../../../../../utils/stringUtils";
 import { useTranslation } from "@/app/i18/client";
 import AresButton from "../../components/AresButton/AresButton";
 import { StateType } from "../../../../../utils/constants";
+import useValidation from "../../customHooks/useValidation";
 
 const Address = ({ params: { lng } } : { params: { lng: string }}) => {
   const { t } = useTranslation(lng, 'auth')
   const dispatch = useAppDispatch();
   const router = useRouter()
+  // validation of submited data from custom hook
+  const { registrationInputIsNotEmpty } = useValidation(lng);
   // use registration form state from redux
   const registrationForm = useAppSelector(state => state.registrationForm)
   // initial errors for required values
@@ -47,59 +49,32 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
     // dispatch action
     dispatch(setValue(action));
   };
-  
-  /**
-   * Helper function to check validation of inputs.
-   * Vat ID is not mandatory.
-   * @returns 
-   */
-  const isFilledCorrectly = () => {
-    let isFilledCorrectly = true;
-    const newErrorState = initialErrors;
-
-    if(isEmptyString(registrationForm.personalIdNumber)) {
-      isFilledCorrectly = false;
-      newErrorState.personalIdNumber = t("errorMessage.missing.personalIdNumber");
-    }
-    if(isEmptyString(registrationForm.companyName)) {
-      isFilledCorrectly = false;
-      newErrorState.companyName = t("errorMessage.missing.companyName");
-    }
-    if(isEmptyString(registrationForm.street)) {
-      isFilledCorrectly = false;
-      newErrorState.street = t("errorMessage.missing.street");
-    }
-    if(isEmptyString(registrationForm.streetNumber)) {
-      isFilledCorrectly = false;
-      newErrorState.streetNumber = t("errorMessage.missing.streetNumber");
-    }
-    if(isEmptyString(registrationForm.city)) {
-      isFilledCorrectly = false;
-      newErrorState.city = t("errorMessage.missing.city");
-    }
-    if(isEmptyString(registrationForm.postalCode)) {
-      isFilledCorrectly = false;
-      newErrorState.postalCode = t("errorMessage.missing.postalCode");
-    }
-
-    setErrors(newErrorState);
-    return isFilledCorrectly;
-  };
-  
+    
   const submitHandler = ( event: FormEvent ) => {
     event.preventDefault();
     
     if (isLoading) {
       return;
     }
+
+    // getting IDs of used input elements 
+    const formElement = document.querySelector('form')
+    const inputElements = formElement?.querySelectorAll('input');
+    inputElements !== undefined && inputElements.forEach(input => {
+      const inputId = input.id;
+      const inputValue = input.value;
+    });
+
     setLoading(true);
 
     const newErrorState = errors;
+    const isFilledCorrectly = registrationInputIsNotEmpty(inputElements, newErrorState).isFilledCorrectly;
+
     setErrors({
       ...newErrorState
     });
 
-    if (isFilledCorrectly()) {
+    if (isFilledCorrectly) {
       router.push("/summary")
     } else {
       console.error({
