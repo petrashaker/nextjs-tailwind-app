@@ -2,8 +2,10 @@ import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { AresUploadBtnProps } from "../../../../../types/componentPropTypes";
 import { StateType } from "../../../../../utils/constants";
 import { setAresData, setState } from "@/lib/features/ares/aresSlice";
+import { useTranslation } from "@/app/i18/client";
 
 const AresButton = ( props: AresUploadBtnProps ) => {
+  const { t } = useTranslation(props.lng, 'auth')
   const dispatch = useAppDispatch()
   const aresData = useAppSelector(state => state.aresData)
   const fetchData = (query: string, id: string) => {
@@ -104,14 +106,20 @@ const AresButton = ( props: AresUploadBtnProps ) => {
     return parsedData;
   };
 
-
+  const buttonClassCommon = " w-80 text-sm border-2 py-1.5 px-2.5 rounded-md"
   return(
     <button 
       type="button" 
-      className="b-2 bg-gray-500"
+      className={
+        `${props.isDisabled ? 
+          "bg-cyan-600 border-cyan-600  hover:bg-cyan-300 hover:border-cyan-300" + buttonClassCommon
+          : 
+          "bg-cyan-50 border-cyan-50 text-gray-300 hover:bg-cyan-50 hover:border-cyan-50 cursor-not-allowed" + buttonClassCommon
+        }`
+      }
       onClick={ handleClick }
       >
-      Ares Button
+      { t('button.ares') }
     </button>
   )
 }

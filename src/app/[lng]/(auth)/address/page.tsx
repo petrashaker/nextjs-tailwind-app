@@ -97,16 +97,6 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
   return (
     <div className='w-96 p-4 mx-auto text-center'>
       <h1>{ t("title.address") }</h1>
-        <AresButton 
-         query={ registrationForm.personalIdNumber } 
-         id={ 'personalIdNumber' } 
-         isDisabled={ false }
-        />
-        <AresButton 
-         query={ registrationForm.companyName } 
-         id={ 'companyName' } 
-         isDisabled={ false }
-        />
       <form onSubmit={ submitHandler }>
         <InputWithError 
           id={ 'personalIdNumber' }
@@ -115,6 +105,12 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
           value={ registrationForm.personalIdNumber }
           onChange={ valueChangeHandler }
           error={ errors.personalIdNumber }
+        />
+        <AresButton
+          query={ registrationForm.personalIdNumber } 
+          id={ 'personalIdNumber' } 
+          isDisabled={ registrationForm.personalIdNumber.length > 6 }
+          lng={ lng }
         />
         <InputWithError 
           id={ 'vatIdNumber' }
@@ -131,6 +127,12 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
           value={ registrationForm.companyName }
           onChange={ valueChangeHandler }
           error={ errors.companyName }
+        />
+        <AresButton 
+          query={ registrationForm.companyName } 
+          id={ 'companyName' } 
+          isDisabled={ registrationForm.companyName.length > 3 }
+          lng={ lng }
         />
         <InputWithError 
           id={ 'street' }
@@ -169,6 +171,7 @@ const Address = ({ params: { lng } } : { params: { lng: string }}) => {
           color={ 'cyan-600' }
           text={ 'white' }
           type={ 'submit' }
+          onClick={ submitHandler }
         >
           { t("button.continue") }
         </ButtonWithLoading>

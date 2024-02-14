@@ -51,10 +51,9 @@ const Summary = ({ params: { lng } } : { params: { lng: string }}) => {
 
   return(
     <>
+    <h1>          { t("title.summary") }
+</h1>
       <table className='w-96 p-4 mx-auto text-center'>
-        <thead>
-          <h1>{ t("title.summary") }</h1>
-        </thead>
         <tbody>
           <tr className="text-left">
             <td className="text-left">{ t("placeholders.firstName") }:</td>

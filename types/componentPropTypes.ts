@@ -29,4 +29,5 @@ export type AresUploadBtnProps = {
   id: string;
   isDisabled: boolean;
   errorMessage?: boolean;
+  lng: string;
 };

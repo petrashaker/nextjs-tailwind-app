@@ -46,7 +46,7 @@ const ButtonWithLoading = (props: ButtonWithLoadingProps) => {
   return (
     <button
       type={ type }
-      className={ `bg-${props.color} border-${props.color} border-2 py-1.5 px-5 rounded-md hover:bg-cyan-300` }
+      className={ ` w-80 bg-${props.color} border-${props.color} border-2 py-1.5 px-5 rounded-md hover:bg-cyan-300 hover:border-cyan-300` }
       onClick={ clickHandler }
       disabled={ props.isDisabled }
     >

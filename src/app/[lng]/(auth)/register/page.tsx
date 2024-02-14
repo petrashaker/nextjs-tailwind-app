@@ -123,6 +123,7 @@ const RegisterPage = ({ params: { lng } } : { params: { lng: string }}) => {
           color={ 'cyan-600' }
           text={ 'white' }
           type={ 'submit' }
+          onClick={ submitHandler }
         >
           { t("button.continue") }
         </ButtonWithLoading>
